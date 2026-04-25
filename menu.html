@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Menu - Le Binguiss</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #172243;
+  --navy-light: #1e2e5a;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --cream: #faf8f3;
+  --white: #ffffff;
+  --shadow: 0 4px 20px rgba(23,34,67,0.10);
+  --shadow-hover: 0 8px 32px rgba(23,34,67,0.18);
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  min-height: 100vh;
+  padding: 0 0 120px 0;
+}
+
+/* ── HERO BANNER ── */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #0d1a40 100%);
+  padding: 48px 24px 38px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(201,168,76,0.18) 0%, transparent 65%),
+              radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.10) 0%, transparent 55%);
+}
+
+.hero-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 2px;
+  position: relative;
+  line-height: 1;
+}
+
+.hero-logo span {
+  color: var(--gold);
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 14px 0 10px;
+  position: relative;
+}
+
+.hero-divider::before,
+.hero-divider::after {
+  content: '';
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+}
+
+.hero-divider-icon {
+  color: var(--gold);
+  font-size: 18px;
+}
+
+.hero-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+/* ── CONTENT WRAPPER ── */
+.content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ── CATEGORY HEADER ── */
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 36px 0 16px;
+}
+
+.category-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--navy);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(23,34,67,0.22);
+}
+
+.category-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--navy);
+  flex: 1;
+}
+
+.category-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(23,34,67,0.2), transparent);
+}
+
+/* ── MENU ITEM ── */
+.menu-item {
+  background: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px;
+  margin: 8px 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.22s, transform 0.22s;
+  border-left: 3px solid transparent;
+  gap: 12px;
+}
+
+.menu-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-left-color: var(--gold);
+}
+
+.menu-item.active {
+  border-left-color: var(--gold);
+  background: linear-gradient(to right, #fffdf5, var(--white));
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-name {
+  font-weight: 500;
+  color: var(--navy);
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.item-price {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-top: 3px;
+  letter-spacing: 0.3px;
+}
+
+/* ── PORTION CHOICE ── */
+.portion-choice {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.portion-btn {
+  cursor: pointer;
+  position: relative;
+}
+
+.portion-btn input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.portion-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 1.5px solid rgba(23,34,67,0.22);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--navy);
+  background: var(--cream);
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+
+.portion-btn input:checked ~ .portion-label {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
+
+.portion-btn:hover .portion-label {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
+
+.portion-price-tag {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+/* ── QUANTITY CONTROL ── */
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--cream);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid rgba(23,34,67,0.12);
+  flex-shrink: 0;
+}
+
+.quantity button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  color: var(--navy);
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.quantity button:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.quantity span {
+  min-width: 28px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--navy);
+  padding: 0 2px;
+}
+
+/* ── STICKY CART BAR ── */
+.cart-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--navy);
+  z-index: 1000;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 -4px 24px rgba(23,34,67,0.28);
+}
+
+.cart-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cart-badge {
+  background: var(--gold);
+  color: var(--navy);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.cart-label {
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+}
+
+.cart-total {
+  color: var(--white);
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+}
+
+.cart-btn {
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.18s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.cart-btn:hover {
+  background: var(--gold-light);
+  transform: scale(1.03);
+}
+
+.cart-btn:active {
+  transform: scale(0.98);
+}
+
+/* ── EMPTY CART STATE ── */
+.cart-bar.empty .cart-btn {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* ── RANGE PRICE (fish section) ── */
+.item-price-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.price-range-label {
+  font-size: 12px;
+  color: rgba(23,34,67,0.5);
+}
+
+.price-range-input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 120px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--gold) 0%, var(--gold) 50%, rgba(23,34,67,0.15) 50%);
+  outline: none;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.price-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--navy);
+  cursor: pointer;
+  border: 2px solid var(--gold);
+  transition: transform 0.15s;
+}
+
+.price-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.price-range-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  min-width: 80px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+  .hero-logo { font-size: 32px; }
+  .menu-item { flex-wrap: wrap; }
+  .quantity { margin-top: 8px; }
+  .portion-choice { gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-logo"> <span>Le Binguiss</span></div>
+  <div class="hero-divider">
+    <div class="hero-divider-icon">✦</div>
+  </div>
+  <div class="hero-sub">Restaurant & Gastronomie</div>
+</div>
+
+<div class="content">
+
+<script>
+/* ───────────────────────────
+   HELPERS
+─────────────────────────── */
+
+function categoryHeader(icon, title) {
+  document.write(`
+    <div class="category-header">
+      <div class="category-icon">${icon}</div>
+      <div class="category-title">${title}</div>
+      <div class="category-line"></div>
+    </div>
+  `);
+}
+
+function ajouterItem(nom, prix) {
+  document.write(`
+  <div class="menu-item" data-name="${nom}" data-prix="${prix}">
+    <div class="item-info">
+      <div class="item-name">${nom}</div>
+      <div class="item-price">${prix.toLocaleString('fr-FR')} FCFA</div>
+    </div>
+    <div class="quantity">
+      <button onclick="changerQuantite(this,-1)">−</button>
+      <span>0</span>
+      <button onclick="changerQuantite(this,1)">+</button>
+    </div>
+  </div>`);
+}
+
+function ajouterItemSimple(nom, prix) {
+  ajouterItem(nom, prix);
+}
+
+/* Fish item: fixed base price + slider up to 20 000 */
+function ajouterItemPoisson(nom, prixBase) {
+  const id = 'range_' + nom.replace(/\s+/g,'_').replace(/[^\w]/g,'');
+  document.write(`
+  <div class="menu-item poisson-item" data-name="${nom}" data-prix="${prixBase}" id="item_${id}">
+    <div class="item-info">
+      <div class="item-name">${nom}</div>
+      <div class="item-price-range">
+        <span class="price-range-label">Prix :</span>
+        <input class="price-range-input" type="range"
+               id="${id}"
+               min="${prixBase}" max="20000" step="500"
+               value="${prixBase}"
+               oninput="updatePoissonPrice(this,'${id}_val','item_${id}')">
+        <span class="price-range-value" id="${id}_val">${prixBase.toLocaleString('fr-FR')} FCFA</span>
+      </div>
+    </div>
+    <div class="quantity">
+      <button onclick="changerQuantite(this,-1)">−</button>
+      <span>0</span>
+      <button onclick="changerQuantite(this,1)">+</button>
+    </div>
+  </div>`);
+}
+
+/* Special: two fixed prices for Marmite du Pêcheur */
+function ajouterMarmite() {
+  document.write(`
+  <div class="menu-item fraction-item" data-name="Marmite du Pêcheur">
+    <div class="item-info">
+      <div class="item-name">Marmite du Pêcheur</div>
+      <div class="portion-choice">
+        <label class="portion-btn">
+          <input type="radio" name="MarmitePecheur" value="Petite" data-prix="15000" checked>
+          <span class="portion-label">Petite <span class="portion-price-tag">15 000 FCFA</span></span>
+        </label>
+        <label class="portion-btn">
+          <input type="radio" name="MarmitePecheur" value="Grande" data-prix="25000">
+          <span class="portion-label">Grande <span class="portion-price-tag">25 000 FCFA</span></span>
+        </label>
+      </div>
+    </div>
+    <div class="quantity">
+      <button onclick="changerQuantite(this,-1)">−</button>
+      <span>0</span>
+      <button onclick="changerQuantite(this,1)">+</button>
+    </div>
+  </div>`);
+}
+
+/* Meat item with ½ / Entier */
+function ajouterItemFraction(nom, prixDemi, prixEntier) {
+  const safeName = nom.replace(/"/g,'&quot;');
+  document.write(`
+  <div class="menu-item fraction-item" data-name="${safeName}">
+    <div class="item-info">
+      <div class="item-name">${nom}</div>
+      <div class="portion-choice">
+        <label class="portion-btn">
+          <input type="radio" name="${safeName}" value="½" data-prix="${prixDemi}" checked>
+          <span class="portion-label">½ <span class="portion-price-tag">${prixDemi.toLocaleString('fr-FR')} FCFA</span></span>
+        </label>
+        <label class="portion-btn">
+          <input type="radio" name="${safeName}" value="Entier" data-prix="${prixEntier}">
+          <span class="portion-label">Entier <span class="portion-price-tag">${prixEntier.toLocaleString('fr-FR')} FCFA</span></span>
+        </label>
+      </div>
+    </div>
+    <div class="quantity">
+      <button onclick="changerQuantite(this,-1)">−</button>
+      <span>0</span>
+      <button onclick="changerQuantite(this,1)">+</button>
+    </div>
+  </div>`);
+}
+</script>
+
+<!-- ── ENTRÉES FROIDES & SALADES ── -->
+<script>categoryHeader('🥗','Entrées Froides & Salades');</script>
+<script>
+ajouterItem("Avocat Crevettes", 6000);
+ajouterItem("Salade Niçoise", 6000);
+ajouterItem("Salade Composée", 3000);
+ajouterItem("Salade de foie ou gésier de Volailles", 3500);
+ajouterItem("Salade Verte", 2500);
+</script>
+
+<!-- ── ENTRÉES CHAUDES ── -->
+<script>categoryHeader('🔥','Entrées Chaudes');</script>
+<script>
+ajouterItem("Crevette Sautée", 6500);
+ajouterItem("Beignets de Crevettes", 6000);
+ajouterItem("Cuisse de Grenouilles Sautées", 7000);
+ajouterItem("Ecrevisses Sautées", 7000);
+ajouterItem("Ecrevisses Bassamoises", 8000);
+</script>
+
+<!-- ── NOS PÂTES ── -->
+<script>categoryHeader('🍝','Nos Pâtes');</script>
+<script>
+ajouterItem("Spaghettis à la Milanaise", 5000);
+ajouterItem("Spaghettis à la Bolognaise", 6000);
+ajouterItem("Spaghettis aux Crevettes", 7500);
+ajouterItem("Spaghettis aux Ecrevisses", 8500);
+ajouterItem("Spaghettis aux Gambas", 15000);
+ajouterItem("Spaghettis aux Langoustres", 16000);
+</script>
+
+<!-- ── POISSONS ── -->
+<script>categoryHeader('🐟','Poissons');</script>
+<script>
+ajouterItemPoisson("Langoustre Braisée", 15000);
+ajouterItemPoisson("Gambas Braisée ou Sautée", 14000);
+ajouterItemPoisson("Sole Meunière", 8000);
+ajouterItemPoisson("Filet de Sole ou Mérou", 10000);
+ajouterItemPoisson("Capitaine / Bar / Daurade", 8000);
+ajouterMarmite();
+ajouterItemPoisson("Brochettes de Merou", 8000);
+ajouterItemPoisson("Calamar Frit aux Légumes", 7000);
+ajouterItemPoisson("Brochettes d'Escargots", 7000);
+ajouterItemPoisson("Crabes de Mer Mayonnaise", 8000);
+</script>
+
+<!-- ── VIANDES & VOLAILLES ── -->
+<script>categoryHeader('🥩','Viandes & Volailles');</script>
+<script>
+ajouterItemFraction("Lapin Braisé ou Kedjenou", 8500, 15000);
+ajouterItemSimple("Brochettes de Filet de Bœuf", 7000);
+ajouterItemSimple("Filet de Bœuf (Sauce au choix)", 10000);
+ajouterItemSimple("Entrecôte Maitre", 8000);
+ajouterItemFraction("Poulet Braisé ou Kedjénou", 4000, 7000);
+ajouterItemFraction("Poulet Africain ou Pondeuse", 7500, 15000);
+ajouterItemFraction("Pintade Braisée ou Kedjénou", 7500, 15000);
+ajouterItemSimple("Poulet Binguss/Sauté", 10000);
+</script>
+
+<!-- ── DESSERTS ── -->
+<script>categoryHeader('🍮','Desserts');</script>
+<script>
+ajouterItem("Bananes Flambées ou Ananas", 3000);
+ajouterItem("Ananas Pirogue", 1500);
+ajouterItem("Assiette de Fruits Frais", 2000);
+ajouterItem("Salades de Fruits", 2000);
+ajouterItem("Crêpe au Chocolat", 3000);
+</script>
+
+<!-- ── BOISSONS ── -->
+<script>categoryHeader('🥂','Boissons');</script>
+<script>
+ajouterItem("Bières", 1500);
+ajouterItem("Sucreries classiques", 1000);
+ajouterItem("Jus Naturel", 3000);
+ajouterItem("Energy Red Bull", 1500);
+ajouterItem("Eau Minérale", 1000);
+ajouterItem("Petit Déjeuner Complet", 2500);
+ajouterItem("Café / Thé", 1000);
+ajouterItem("Cocktails classiques", 3000);
+ajouterItem("Liqueur - Apéritif", 1500);
+ajouterItem("Digestif", 2000);
+</script>
+
+<!-- ── ACCOMPAGNEMENTS ── -->
+<script>categoryHeader('🍟','Accompagnements');</script>
+<script>
+ajouterItem("Attiéké", 1000);
+ajouterItem("Frite de Pommes de Terre", 1000);
+ajouterItem("Frite d'Ignames", 1500);
+ajouterItem("Frite de Patates Douces", 1500);
+ajouterItem("Alloco", 1000);
+ajouterItem("Riz", 1000);
+ajouterItem("Haricot Vert", 1500);
+ajouterItem("Pommes de terre Sautées aux Herbes", 2500);
+ajouterItem("Pommes de Terre Vapeur", 1500);
+</script>
+
+</div><!-- /content -->
+
+<!-- ── CART BAR ── -->
+<div class="cart-bar empty" id="cartBar" onclick="ouvrirPanier()">
+  <div class="cart-info">
+    <div class="cart-badge" id="nbCommandes">0</div>
+    <div>
+      <div class="cart-label">Commande(s)</div>
+      <div class="cart-total"><span id="prixTotal">0</span> FCFA</div>
+    </div>
+  </div>
+  <button class="cart-btn">
+    🛒 Voir le panier
+  </button>
+</div>
+
+<script>
+/* ─── SLIDER UPDATE ─── */
+function updatePoissonPrice(input, valId, itemId) {
+  const v = parseInt(input.value);
+  const pct = ((v - parseInt(input.min)) / (parseInt(input.max) - parseInt(input.min))) * 100;
+  input.style.background = `linear-gradient(to right, var(--gold) 0%, var(--gold) ${pct}%, rgba(23,34,67,0.15) ${pct}%)`;
+  document.getElementById(valId).textContent = v.toLocaleString('fr-FR') + ' FCFA';
+  document.getElementById(itemId).dataset.prix = v;
+  mettreAJourPanier();
+}
+
+/* ─── QUANTITY ─── */
+function changerQuantite(button, valeur) {
+  const span = button.parentElement.querySelector('span');
+  let q = parseInt(span.innerText) + valeur;
+  if (q < 0) q = 0;
+  span.innerText = q;
+  const item = button.closest('.menu-item');
+  if (q > 0) item.classList.add('active');
+  else item.classList.remove('active');
+  mettreAJourPanier();
+}
+
+/* ─── CART TOTAL ─── */
+function mettreAJourPanier() {
+  let total = 0, nombre = 0;
+  document.querySelectorAll('.menu-item').forEach(item => {
+    const q = parseInt(item.querySelector('.quantity span').innerText);
+    if (q > 0) {
+      nombre += q;
+      if (item.classList.contains('fraction-item')) {
+        const radio = item.querySelector('input[type="radio"]:checked');
+        total += parseInt(radio.dataset.prix) * q;
+      } else {
+        total += parseInt(item.dataset.prix) * q;
+      }
+    }
+  });
+  document.getElementById('prixTotal').innerText = total.toLocaleString('fr-FR');
+  document.getElementById('nbCommandes').innerText = nombre;
+  const bar = document.getElementById('cartBar');
+  if (nombre > 0) bar.classList.remove('empty');
+  else bar.classList.add('empty');
+}
+
+/* ─── OPEN CART ─── */
+function ouvrirPanier() {
+  const commandes = [];
+  document.querySelectorAll('.menu-item').forEach(item => {
+    const q = parseInt(item.querySelector('.quantity span').innerText);
+    if (q > 0) {
+      const nom = item.dataset.name;
+      let prix = 0, portion = '';
+      if (item.classList.contains('fraction-item')) {
+        const radio = item.querySelector('input[type="radio"]:checked');
+        prix = parseInt(radio.dataset.prix);
+        portion = radio.value;
+      } else {
+        prix = parseInt(item.dataset.prix);
+      }
+      commandes.push({ nom, prix, quantite: q, portion });
+    }
+  });
+  if (commandes.length === 0) return;
+  localStorage.setItem('panierBinguiss', JSON.stringify(commandes));
+  window.location.href = 'panier.html';
+}
+
+/* ─── RADIO CHANGE ─── */
+document.addEventListener('change', e => {
+  if (e.target.matches('input[type="radio"]')) mettreAJourPanier();
+});
+</script>
+</body>
+</html>
